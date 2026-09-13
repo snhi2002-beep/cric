@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/auth.css">
+    <style>
+        .error-code {
+            font-size: 72px;
+            font-weight: 800;
+            color: #ef4444;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="auth-container">
+    <div class="auth-card" style="text-align: center;">
+        <div class="error-code"><%= statusCode || 500 %></div>
+        <h1 class="brand-title">Server Error</h1>
+        <p class="brand-subtitle" style="margin-bottom: 24px;"><%= message %></p>
+        <a href="/" class="btn-primary" style="display: inline-block; text-decoration: none; width: auto; padding: 12px 28px;">Back to Safety</a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 {
   "name": "cric",
-  "version": "1.0.0",
-  "description": "IPTV Live Player Express.js app with EJS",
+  "version": "1.1.0",
+  "description": "Production-ready IPTV Live Player with Session-based Authentication and In-Memory Database",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -10,15 +10,21 @@
   "keywords": [
     "express",
     "ejs",
+    "session",
+    "authentication",
+    "in-memory-db",
     "hls",
-    "iptv",
-    "video-player"
+    "iptv"
   ],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
-    "express": "^4.21.0"
+    "express": "^4.21.0",
+    "express-session": "^1.18.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"
