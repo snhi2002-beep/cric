@@ -1,0 +1,26 @@
+{
+  "name": "cric",
+  "version": "1.0.0",
+  "description": "IPTV Live Player Express.js app with EJS",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "express",
+    "ejs",
+    "hls",
+    "iptv",
+    "video-player"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
