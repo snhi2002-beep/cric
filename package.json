@@ -1,32 +1,17 @@
 {
   "name": "cric",
-  "version": "1.1.0",
-  "description": "Production-ready IPTV Live Player with Session-based Authentication and In-Memory Database",
-  "main": "server.js",
+  "private": true,
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "start": "turbo start"
   },
-  "keywords": [
-    "express",
-    "ejs",
-    "session",
-    "authentication",
-    "in-memory-db",
-    "hls",
-    "iptv"
+  "workspaces": [
+    "apps/*"
   ],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "connect-flash": "^0.1.1",
-    "dotenv": "^16.4.5",
-    "ejs": "^3.1.10",
-    "express": "^4.21.0",
-    "express-session": "^1.18.0"
-  },
   "devDependencies": {
-    "nodemon": "^3.1.7"
-  }
+    "turbo": "^2.1.2"
+  },
+  "packageManager": "npm@10.8.2"
 }

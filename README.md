@@ -1,87 +1,82 @@
-# Cric IPTV - Live Streaming Application with Session Authentication
+# Cric - Turborepo Monorepo (Next.js + Express.js)
 
-A production-ready Node.js and Express.js web application with modern session-based authentication, an in-memory database, and HLS.js live streaming player.
+A production-ready Turborepo monorepo featuring a **Next.js 14 (App Router)** frontend and an **Express.js** backend with session-based authentication, in-memory database, and HLS.js live video streaming player.
 
-## Features
-
-- **Session-Based Authentication**: Secure cookie sessions via `express-session` with session fixation protection.
-- **In-Memory Database**: High-performance in-memory datastore with bcrypt-hashed passwords and indexing by username and email.
-- **Production-Level Architecture**:
-  - Modular routing (`routes/auth.js`, `routes/player.js`).
-  - Auth route protection middleware (`middleware/auth.js`).
-  - Centralized 404 and global 500 error handling with graceful process shutdown.
-  - Flash notifications for error and success alerts.
-- **Modern UI**:
-  - Glassmorphic dark aesthetic for Login and Register pages with ambient glowing accents.
-  - Responsive live stream player with header status indicator, user badge, and controls.
-
-## Pre-configured Demo Account
-
-An initial user is automatically seeded in the in-memory database on startup:
-- **Username:** `demo_user` (or email: `demo@example.com`)
-- **Password:** `password123`
-
-You can also register new accounts directly from the `/register` page.
-
-## Project Structure
+## Repository Architecture
 
 ```
-├── db/
-│   └── memoryDb.js          # In-memory user database with bcrypt hashing & indices
-├── middleware/
-│   └── auth.js              # Protected & guest route authorization middleware
-├── public/
-│   ├── css/
-│   │   ├── auth.css         # Modern styling for Login/Register/Error pages
-│   │   └── style.css        # Player & navbar interface styling
-│   └── js/
-│       └── player.js        # HLS video player logic & controls
-├── routes/
-│   ├── auth.js              # /login, /register, /logout routes with validation
-│   └── player.js            # / protected player route
-├── views/
-│   ├── 404.ejs              # Page Not Found view
-│   ├── error.ejs            # Server Error view
-│   ├── index.ejs            # Protected IPTV player dashboard
-│   ├── login.ejs            # Modern login interface
-│   └── register.ejs         # Modern registration interface
-├── .env.example             # Example environment variables
-├── .gitignore
-├── package.json
-├── README.md
-└── server.js                # Main Express server entry point
+cric/
+├── apps/
+│   ├── api/                     # Express.js backend API (Port 5000)
+│   │   ├── src/
+│   │   │   ├── db/
+│   │   │   │   └── memoryDb.js  # In-memory datastore with bcrypt hashing
+│   │   │   ├── middleware/
+│   │   │   │   └── auth.js      # Session authentication guard
+│   │   │   ├── routes/
+│   │   │   │   ├── auth.js      # /api/auth (login, register, me, logout)
+│   │   │   │   └── stream.js    # /api/stream (live stream endpoints)
+│   │   │   └── server.js        # Express server entry point
+│   │   ├── .env.example
+│   │   └── package.json
+│   └── web/                     # Next.js 14 frontend (Port 3000)
+│       ├── app/
+│       │   ├── login/page.js    # Modern glassmorphic Login page
+│       │   ├── register/page.js # Modern Registration page
+│       │   ├── globals.css      # Tailwind & global styles
+│       │   ├── layout.js        # Root application layout
+│       │   └── page.js          # Protected Live IPTV player dashboard
+│       ├── components/
+│       │   ├── Navbar.js        # Sticky top navigation bar
+│       │   └── VideoPlayer.js   # HLS.js video playback component
+│       ├── next.config.js       # Next.js config with API proxy rewrites
+│       ├── tailwind.config.js
+│       ├── .env.example
+│       └── package.json
+├── package.json                 # Turborepo root workspace configuration
+├── turbo.json                   # Turborepo task pipeline
+└── README.md
 ```
 
-## Getting Started
+## Quick Start
 
-### 1. Install Dependencies
+### 1. Prerequisites
+- **Node.js** >= 18.0.0
+- **npm** >= 10.0.0
+
+### 2. Install Dependencies
 ```bash
 npm install
 ```
 
-### 2. Configure Environment (Optional)
-```bash
-cp .env.example .env
-```
+### 3. Run Development Servers
+Using Turborepo, start both frontend (`web`) and backend (`api`) concurrently with a single command:
 
-### 3. Run the Application
 ```bash
-# Start production server
-npm start
-
-# Or run in development mode (with nodemon auto-restart)
 npm run dev
 ```
 
-Navigate to `http://localhost:3000` in your web browser. Unauthenticated requests will automatically be routed to `/login`.
+- **Frontend (Next.js):** [http://localhost:3000](http://localhost:3000)
+- **Backend (Express API):** [http://localhost:5000](http://localhost:5000)
 
-## Available Endpoints
+### 4. Build for Production
+```bash
+npm run build
+```
 
-| Method | Path | Description | Access |
+## Demo Credentials
+An initial user is automatically seeded in the in-memory database:
+- **Username:** `demo_user` (or `demo@example.com`)
+- **Password:** `password123`
+*(A 1-click "Fill Demo" button is also provided on the login page)*
+
+## API Endpoints
+
+| Method | Endpoint | Description | Auth Required |
 |---|---|---|---|
-| `GET` | `/` | Live IPTV Player | Authenticated |
-| `GET` | `/login` | Modern Login Page | Public |
-| `POST` | `/login` | Authenticate & establish session | Public |
-| `GET` | `/register` | Modern Register Page | Public |
-| `POST` | `/register` | Register account with validation | Public |
-| `POST` / `GET` | `/logout` | Destroy session & sign out | Authenticated |
+| `GET` | `/api/health` | Service health status | No |
+| `POST` | `/api/auth/login` | Authenticate & start session | No |
+| `POST` | `/api/auth/register` | Register new user account | No |
+| `GET` | `/api/auth/me` | Fetch active user session | Yes |
+| `POST` | `/api/auth/logout` | Terminate session & clear cookie | Yes |
+| `GET` | `/api/stream/info` | Live stream metadata and URL | Yes |
